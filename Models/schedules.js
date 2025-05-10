@@ -16,7 +16,7 @@ const Schedules = sequelize.define('schedule-table', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    slot: {
+    slotTime: {
         type: Sequelize.STRING,
         allowNull: false
     }
