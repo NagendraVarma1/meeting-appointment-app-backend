@@ -1,17 +1,24 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const sequelize = require("./util/database");
+const scheduleRoutes = require("./Routes/schedules");
+const seedSlot = require("./Controller/seedSlots");
 
 const app = express();
 
-app.use("/", (req, res, next) => {
-  res.send("<h1>This is for testing</h1>");
-  console.log(1 + 1);
-});
+app.use(cors());
+
+app.use(bodyParser.json());
+
+app.use("/", scheduleRoutes);
 
 sequelize
-  .sync()
-  .then(() => {
-    app.listen(3000);
+  .sync({alter: true})
+  .then( async() => {
+    await seedSlot()
+    app.listen(5000);
   })
   .catch((err) => {
     console.log(err);
