@@ -1,6 +1,6 @@
 const Schedules = require("../Models/schedules");
 const Slots = require("../Models/slots");
-const {Op} = require('sequelize')
+const { Op } = require("sequelize");
 
 exports.addNewSchedule = async (req, res, next) => {
   try {
@@ -19,16 +19,19 @@ exports.addNewSchedule = async (req, res, next) => {
 
     const availSlots = slot.availableSlots;
 
-    await Slots.update({
-      availableSlots: availSlots - 1,
-    },{
+    await Slots.update(
+      {
+        availableSlots: availSlots - 1,
+      },
+      {
         where: {
-            slotTime: slotTime,
-            availableSlots : {
-                [Op.gt]: 0
-            }
-        }
-    });
+          slotTime: slotTime,
+          availableSlots: {
+            [Op.gt]: 0,
+          },
+        },
+      }
+    );
     res.status(202).json({ newUser: data });
   } catch (err) {
     console.log(err);
@@ -36,7 +39,7 @@ exports.addNewSchedule = async (req, res, next) => {
 };
 
 exports.getAllSchedules = async (req, res, next) => {
-    const slotsData = await Slots.findAll()
+  const slotsData = await Slots.findAll();
   Schedules.findAll()
     .then((data) => {
       res.status(202).json({ allSchedules: data, allSlotsData: slotsData });
@@ -62,14 +65,17 @@ exports.deleteSchedule = async (req, res, next) => {
 
     const availSlots = deletedSlot.availableSlots;
 
-    await Slots.update({
-      availableSlots: availSlots + 1,
-    },{
+    await Slots.update(
+      {
+        availableSlots: availSlots + 1,
+      },
+      {
         where: {
-            slotTime: deletedSlotTime
-        }
-    });
-    
+          slotTime: deletedSlotTime,
+        },
+      }
+    );
+
     await Schedules.destroy({
       where: {
         id: id,
