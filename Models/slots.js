@@ -5,7 +5,7 @@ const Sequelize = require("sequelize");
 
 const Slots = sequelize.define('slots-table', {
     slotTime: {
-        type: Sequelize.TIME,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true
     },

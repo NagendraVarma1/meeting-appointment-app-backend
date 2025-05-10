@@ -1,6 +1,6 @@
 const Slots = require('../Models/slots')
 
-const defaultSlots = ['9:00', '10:00', '11:00', '12:00'];
+const defaultSlots = ['9:00 A.M', '10:00 A.M', '11:00 A.M', '12:00 P.M'];
 
 const seedSlot = async () => {
     for(const time of defaultSlots){
